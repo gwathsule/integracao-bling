@@ -1,0 +1,26 @@
+{
+  "name": "gwathsule/blank-php-project",
+  "description": "Blank project in PHP without framework dependencies. Only basic libraries installed.",
+  "authors": [
+    {
+      "name": "Rafael dos Santos Gomes",
+      "email": "rafael-dos-santos@hotmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Src\\" : "src/",
+      "Test\\" : "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "mockery/mockery": "^1.5"
+  },
+  "require": {
+    "rakit/validation": "^1.4",
+    "klein/klein": "^2.1",
+    "ext-pdo": "*",
+    "ext-sqlite3": "*"
+  }
+}

@@ -1,0 +1,33 @@
+<html>
+
+    <body>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <form action="http://localhost:8888/bling-integration" method="post">
+            <div class="form-group row">
+                <label for="callback_url" class="col-4 col-form-label">Callback URL</label>
+                <div class="col-8">
+                    <input id="callback_url" name="callback_url" placeholder="Callback URL" type="text" class="form-control" required="required">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="client_id" class="col-4 col-form-label">Client ID</label>
+                <div class="col-8">
+                    <input id="client_id" name="client_id" placeholder="Client ID" type="text" required="required" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="client_secret" class="col-4 col-form-label">Client Secret</label>
+                <div class="col-8">
+                    <input id="client_secret" name="client_secret" placeholder="Client Secret" type="text" class="form-control" required="required">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
