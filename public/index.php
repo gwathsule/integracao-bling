@@ -22,7 +22,12 @@ $server->respond('GET', '/', function (Request $request, Response $response, $se
 
 $server->respond('POST', '/bling-integration', function (Request $request, Response $response) {
     $controller = new APIBlingController();
-    return $controller->handle($request, $response);
+    return $controller->registerAppBling($request, $response);
+});
+
+$server->respond('GET', '/bling-callback', function (Request $request, Response $response) {
+    $controller = new APIBlingController();
+    return $controller->callback($request, $response);
 });
 
 $server->dispatch();
