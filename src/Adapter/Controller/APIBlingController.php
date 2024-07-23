@@ -10,9 +10,6 @@ use Throwable;
 
 class APIBlingController
 {
-
-    const STATE = "121e63b56ab3d845622ca137b1e1e4";
-
     public function __construct(
         private BlingCustomerRepository $repository = new BlingCustomerRepository(),
         private BlingApiClient $client = new BlingApiClient(),
@@ -24,13 +21,13 @@ class APIBlingController
         try {
             $clientId = $request->param("client_id");
             $clientSecret = $request->param("client_secret");
-            $state = substr(md5(rand()), 0, 6);
+            $state = substr(md5(rand()), 0, 30);
             $this->repository->insertNewBlingCustomerData($clientId, $clientSecret, $state);
             $this->client->authorize($clientId, $state);
         } catch (Throwable $exception) {
             return $response
                 ->code(500)
-                ->json(['message' => 'Internal server error.']);
+                ->json(['message' => $exception->getMessage()]);
         }
     }
 
@@ -56,7 +53,7 @@ class APIBlingController
         } catch (Throwable $exception) {
             return $response
                 ->code(500)
-                ->json(['message' => 'Internal server error.']);
+                ->json(['message' => $exception->getMessage()]);
         }
     }
 }

@@ -7,7 +7,7 @@ use Exception;
 
 class SqliteRepository
 {
-    protected function getDatabase(): SQLite3
+    public static function getDatabase(): SQLite3
     {
         return new SQLite3(getenv('SQLITE_PATH'));
     }

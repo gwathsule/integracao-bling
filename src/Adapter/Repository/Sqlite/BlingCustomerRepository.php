@@ -11,41 +11,64 @@ class BlingCustomerRepository extends SqliteRepository
 
     public function __construct()
     {
-        $this->createTableIfNotExists($this->getDatabase());
+        try {
+            $db = $this->getDatabase();
+            $this->createTableIfNotExists($db);
+            $db->close();
+        } catch (\Throwable $ex) {
+            $db->close();
+            throw $ex;
+        }
+
     }
 
     public function insertNewBlingCustomerData($clientId, $clientSecret, $state)
     {
-        $db = $this->getDatabase();
-        $data = [
-            'client_id' => $clientId,
-            'client_secret' => $clientSecret,
-            'client_state' => $state,
-            'access_token' => null,
-            'refresh_token' => null,
-            'token_type' => null,
-            'token_expires_in' => null,
-            'token_scope' => null,
-        ];
-        $this->insert($db, self::TABLE_NAME, $data);
-        $db->close();
+        try {
+            $db = $this->getDatabase();
+            $data = [
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
+                'client_state' => $state,
+                'access_token' => null,
+                'refresh_token' => null,
+                'token_type' => null,
+                'token_expires_in' => null,
+                'token_scope' => null,
+            ];
+            $this->insert($db, self::TABLE_NAME, $data);
+            $db->close();
+        } catch (\Throwable $ex) {
+            $db->close();
+            throw $ex;
+        }
     }
 
     public function filterByClientState($clientState) : array
     {
-        $db = $this->getDatabase();
-        $data = $this->filter($db, self::TABLE_NAME, ["client_state" => $clientState]);
-        $db->close();
-        return $data[0];
+        try {
+            $db = $this->getDatabase();
+            $data = $this->filter($db, self::TABLE_NAME, ["client_state" => $clientState]);
+            $db->close();
+            return $data[0];
+        } catch (\Throwable $ex) {
+            $db->close();
+            throw $ex;
+        }
     }
 
     public function update(array $attributes, int $id): array
     {
-        $db = $this->getDatabase();
-        $this->updateById($db, self::TABLE_NAME, $attributes, $id);
-        $updatedData = $this->getById($db, self::TABLE_NAME, $id);
-        $db->close();
-        return $updatedData;
+        try {
+            $db = $this->getDatabase();
+            $this->updateById($db, self::TABLE_NAME, $attributes, $id);
+            $updatedData = $this->getById($db, self::TABLE_NAME, $id);
+            $db->close();
+            return $updatedData;
+        } catch (\Throwable $ex) {
+            $db->close();
+            throw $ex;
+        }
     }
 
     private function createTableIfNotExists(SQLite3 $conn)
