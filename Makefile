@@ -3,3 +3,6 @@ up:
 
 bash:
 	docker compose exec app sh
+
+down:
+	docker compose down

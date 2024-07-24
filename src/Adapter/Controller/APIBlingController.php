@@ -34,11 +34,13 @@ class APIBlingController
     public function callback(Request $request, Response $response): Response
     {
         try {
-
             $code = $request->param("code");
             $state = $request->param("state");
             $customer = $this->repository->filterByClientState($state);
             $blingResponse = $this->client->getToken($code, $customer["client_id"], $customer["client_secret"]);
+            if(isset($blingResponse["error"])) {
+                throw new \Exception($blingResponse["error"]["description"]);
+            }
             $attributesToUpdate = [
                 "access_token" => $blingResponse["access_token"],
                 "refresh_token" => $blingResponse["refresh_token"],
@@ -48,7 +50,7 @@ class APIBlingController
             ];
             $data = $this->repository->update($attributesToUpdate, $customer["id"]);
 
-            return $response->code(200)->json(['message' => 'OK']);
+            return $response->code(200)->json($data);
 
         } catch (Throwable $exception) {
             return $response
