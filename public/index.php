@@ -10,6 +10,7 @@ use Klein\Klein;
 use Klein\Request;
 use Klein\Response;
 use Src\Adapter\Controller\APIBlingController;
+use Src\Adapter\Controller\Bling;
 
 
 require_once '../vendor/autoload.php';
@@ -28,6 +29,16 @@ $server->respond('POST', '/bling-integration', function (Request $request, Respo
 $server->respond('GET', '/bling-callback', function (Request $request, Response $response) {
     $controller = new APIBlingController();
     return $controller->callback($request, $response);
+});
+
+$server->respond('GET', '/api/bling', function (Request $request, Response $response) {
+    $controller = new Bling($request, $response);
+    return $controller->api();
+});
+
+$server->respond('POST', '/api/bling', function (Request $request, Response $response) {
+    $controller = new Bling($request, $response);
+    return $controller->api();
 });
 
 $server->dispatch();
